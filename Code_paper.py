@@ -262,12 +262,6 @@ int_coef, model, accuracy, false_positive
 # 3. Use log_reg() to get int_coef, model, accuracy, fp_rate
 
 
-# In[ ]:
-
-
-
-
-
 # In[10]:
 
 
@@ -409,12 +403,6 @@ df_final = remove_bad(df)
 # plt.title('Net Conc. Diff')
 
 
-# In[ ]:
-
-
-
-
-
 # In[15]:
 
 
@@ -542,10 +530,6 @@ def log_reg_predict_1(predictors, cols): # Gives the probability of each data oc
 
 A = log_reg_predict_1(df_final,[1,6,8,9])
 A.coef_, A.intercept_
-
-
-# In[ ]:
-
 
 
 
