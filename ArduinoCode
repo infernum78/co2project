@@ -1,7 +1,7 @@
-// Just Arduino SCD30 starter code 
-#include <Adafruit_SCD30.h>
+# Just Arduino SCD30 starter code 
+# include <Adafruit_SCD30.h>
 
-Adafruit_SCD30  scd30;
+Adafruit_SCD30 scd30;
 
 void setup(void) {
   Serial.begin(115200);
