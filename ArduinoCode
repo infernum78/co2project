@@ -1,0 +1,43 @@
+// Just Arduino SCD30 starter code 
+#include <Adafruit_SCD30.h>
+
+Adafruit_SCD30  scd30;
+
+void setup(void) {
+  Serial.begin(115200);
+  while (!Serial) delay(10);     // will pause Zero, Leonardo, etc until serial console opens
+
+  Serial.println("Adafruit SCD30 test!");
+
+  if (!scd30.begin()) {
+    Serial.println("Failed to find SCD30 chip");
+    while (1) { delay(10); }
+  }
+  Serial.println("SCD30 Found!");
+
+  Serial.print("Measurement Interval: "); 
+  Serial.print(scd30.getMeasurementInterval()); 
+  Serial.println(" seconds");
+}
+
+void loop() {
+  if (scd30.dataReady()){
+
+    if (!scd30.read()){ Serial.println("Error reading sensor data"); return; }
+
+    //Serial.print("Temperature: ");
+    Serial.print(scd30.temperature);
+    Serial.print(", ");
+    //Serial.println(" degrees C");
+    
+    //Serial.print("Relative Humidity: ");
+    Serial.print(scd30.relative_humidity);
+    Serial.print(", ");
+    //Serial.println(" %");
+    
+    //Serial.print("CO2: ");
+    Serial.print(scd30.CO2, 3);
+    //Serial.println(" ppm");
+    Serial.println("");
+  delay(100);
+}
