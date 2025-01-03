@@ -27,6 +27,8 @@ from sklearn.metrics import roc_auc_score
 
 # CALCULATING PREDICTORS OF SINGLE DATASET
 
+# CALCULATING PREDICTORS OF SINGLE DATASET
+
 def predictor(arr,start=0,end=5*29): 
     #arr is input filename, time, and truth
     #start = number of measurement to start at, about 29 per min
@@ -51,6 +53,7 @@ def predictor(arr,start=0,end=5*29):
     net_temp = []
     fluct_co2 = []
     fluct_hum = []
+    ma_inc = []
     
     #other 
     time_str = []
@@ -85,13 +88,14 @@ def predictor(arr,start=0,end=5*29):
         net_temp.append(float(df.iloc[len(df)-1,1])-float(df.iloc[0,1]))
         fluct_co2.append(flucts(df,3))
         fluct_hum.append(flucts(df,2))
+        ma_inc.append(ma(df,3))
         
         time_str.append(time[i] + '-' + time[i+1])
         constraint.append(const)
     
     d = {'time':time_str,'net CO2':net,'proportion':proportion,'ratio':ratio,
          'string':string,'slope':slope,'net humidity':net_hum,'net temperature':net_temp,
-         'fluct_CO2':fluct_co2,'fluct_hum':fluct_hum,
+         'fluct_CO2':fluct_co2,'fluct_hum':fluct_hum, 'moving_avg':ma_inc,
          'constraint':constraint,'truth':truth}
     predictors = pd.DataFrame(data = d)
     return predictors
@@ -146,6 +150,14 @@ def flucts(df,col): #number of fluctuations
                 count += 1
     return count
 
+def ma(df,col):
+    total = 0
+    for i in range(len(df)-11):
+        avg1 = np.mean(df.iloc[i:i+10,col])
+        avg2 = np.mean(df.iloc[i+1:i+11,col])
+        if avg2 > avg1:
+            total += 1
+    return total
 
 # In[4]:
 
